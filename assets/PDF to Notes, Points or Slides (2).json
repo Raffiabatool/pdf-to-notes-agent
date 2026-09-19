@@ -1,0 +1,371 @@
+{
+  "name": "PDF to Notes, Points or Slides",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "PDF Reader",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "pdf submission",
+              "fieldType": "file",
+              "multipleFiles": false,
+              "acceptFileTypes": ".pdf",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Output Type",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Point"
+                  },
+                  {
+                    "option": "Notes"
+                  },
+                  {
+                    "option": "Slides"
+                  }
+                ]
+              },
+              "requiredField": true
+            }
+          ]
+        },
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "id": "fd1b5709-33d7-4fac-90b9-aa498be1153f",
+      "name": "On form submission",
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.6,
+      "position": [
+        -320,
+        -64
+      ],
+      "webhookId": "b59e7909-9d73-4cb1-afb4-95b370fdfd6b",
+      "notes": "Web form: upload a PDF and choose Points, Notes or Slides."
+    },
+    {
+      "parameters": {
+        "operation": "pdf",
+        "binaryPropertyName": "={{ Object.keys($binary).length ? Object.keys($binary)[0] : \"data\" }}",
+        "options": {}
+      },
+      "id": "82d9e771-c775-436c-9d98-0dc084949e1f",
+      "name": "Extract Text From PDF1",
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        -48,
+        -64
+      ],
+      "notes": "Pulls the plain text out of the PDF."
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "7991e286-1e89-4805-8ae0-ee699dd6f782",
+              "name": "text",
+              "value": "={{ $json.text }}",
+              "type": "string"
+            },
+            {
+              "id": "4b2cb7e7-9fb3-49ae-ae0b-ada328b02797",
+              "name": "outputType",
+              "value": "={{ String($('On form submission').first().json['Output Type'] || '').toLowerCase() }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "668c6868-e45f-4be5-8250-c2b01cbcb666",
+      "name": "Set Form Info",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        176,
+        -64
+      ],
+      "notes": "Keeps the PDF text and the chosen output type."
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "577fc87e-1a2b-4a7d-a2df-67353d168818",
+                    "leftValue": "={{ $json.outputType }}",
+                    "rightValue": "point",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Points"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "3a8be71b-4907-488d-b0dd-f73f777fe666",
+                    "leftValue": "={{ $json.outputType }}",
+                    "rightValue": "note",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Notes"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "none"
+        }
+      },
+      "id": "f7e53285-4482-4b2a-ac49-f7b984ba90cd",
+      "name": "Choose Output Type",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        384,
+        -64
+      ],
+      "notes": "Sends the item to Points, Notes or Slides, based on the form dropdown."
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "946e80e1-629a-4ed3-9480-1730dfe6cdde",
+              "name": "reply",
+              "value": "={{ $json.content.parts[0].text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b2b1da6d-feca-4d5f-8c1b-142c8919e847",
+      "name": "Get AI Text",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1024,
+        -80
+      ],
+      "notes": "Takes the answer text from the OpenAI response."
+    },
+    {
+      "parameters": {
+        "operation": "completion",
+        "completionTitle": "Your result",
+        "completionMessage": "={{ $json.reply }}",
+        "options": {}
+      },
+      "id": "ad7fbaa5-ef07-46bb-9c67-265bf6ac6c6f",
+      "name": "Form",
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 2.5,
+      "position": [
+        1264,
+        -80
+      ],
+      "webhookId": "d62f0c00-9754-4f64-adec-8a4d9b198f93",
+      "notes": "Shows the result on the last page of the form."
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "models/gemini-3-flash-preview"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=Summarize the following text into key bullet points. Keep it clear, concise, and easy to read:{{ $json.text }} \"Do not use any markdown formatting, asterisks (**), or hash symbols (###) in your output. Provide response in plain clean text only.\""
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.2,
+      "position": [
+        624,
+        -176
+      ],
+      "id": "e8b1ea94-29fc-46b2-85a6-56ca552e3951",
+      "name": "Message a model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "vKq3oqITSPPGz3PJ",
+          "name": "Google Gemini(PaLM) Api account 5"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "models/gemini-3-flash-preview"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "Create detailed, well-structured study notes from the following text. Use headings, subheadings, and key explanations:{{ $json.text }}"
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.2,
+      "position": [
+        624,
+        0
+      ],
+      "id": "765ec45b-3bf0-47f0-a9dd-02bd56ec3a44",
+      "name": "Message a model1",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "vKq3oqITSPPGz3PJ",
+          "name": "Google Gemini(PaLM) Api account 5"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Extract Text From PDF1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Text From PDF1": {
+      "main": [
+        [
+          {
+            "node": "Set Form Info",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Form Info": {
+      "main": [
+        [
+          {
+            "node": "Choose Output Type",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Choose Output Type": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Message a model1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get AI Text": {
+      "main": [
+        [
+          {
+            "node": "Form",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model": {
+      "main": [
+        [
+          {
+            "node": "Get AI Text",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model1": {
+      "main": [
+        [
+          {
+            "node": "Get AI Text",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "3943e0fe-6fdf-4137-b222-68ea171e71dc",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "edbc4eaffa96a448f54ca7a11b560bc3d34d7b0e8f389f20d30e051bff096c31"
+  },
+  "nodeGroups": [],
+  "id": "HOD3mziDxbRy1h6F",
+  "tags": []
+}
