@@ -25,21 +25,16 @@ Reading long PDF documents to extract the main ideas is time consuming. This wor
 
 ### 1. Test Session
 
-![Test session](docs/images/01-test-session.png)
-
-*Test session of the workflow.*
+![Test session](git1.PNG)
 
 ### 2. Workflow
 
-![Workflow](docs/images/02-workflow.png)
+![Workflow](capture.JPG)
 
-*The complete n8n workflow.*
 
 ### 3. Result
 
-![Result](docs/images/03-result.png)
-
-*The generated result shown to the user.*
+![Result](git2.PNG)
 
 ## Key Features
 
