@@ -23,8 +23,7 @@ Reading long PDF documents to extract the main ideas is time consuming. This wor
 
 ## Assets & Resources
 
-- 📥 [Download Workflow JSON File](PDF%20to%20Notes,%20Points%20or%20Slides%20(2).json)
-- 🔗 [View Test Session Screenshot](assets/git1.PNG)
+- 📥 [Download Workflow JSON File](assets/PDF%20to%20Notes,%20Points%20or%20Slides%20(2).json)- 🔗 [View Test Session Screenshot](assets/git1.PNG)
 - 🔗 [View Workflow Architecture Screenshot](assets/Capture.JPG)
 - 🔗 [View Result Preview Screenshot](assets/git2.PNG)
 ## Key Features
