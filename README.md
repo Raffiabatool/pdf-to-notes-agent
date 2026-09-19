@@ -23,15 +23,9 @@ Reading long PDF documents to extract the main ideas is time consuming. This wor
 
 ## Screenshots
 
-### 1. Test Session
-![Test session](assets/git1.PNG)
-
-### 2. Workflow
-![Workflow](assets/Capture.JPG)
-
-### 3. Result
-![Result](assets/git2.PNG)
-
+- 🔗 [View Test Session Screenshot](assets/git1.PNG)
+- 🔗 [View Workflow Architecture Screenshot](assets/Capture.JPG)
+- 🔗 [View Result Preview Screenshot](assets/git2.PNG)
 ## Key Features
 
 - Web form interface for uploading a PDF and selecting the output type
