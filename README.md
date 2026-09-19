@@ -21,8 +21,9 @@ An n8n workflow that converts an uploaded PDF document into either concise bulle
 
 Reading long PDF documents to extract the main ideas is time consuming. This workflow automates that task. A user uploads a PDF, chooses the type of output they want, and receives an AI-generated summary in seconds. No coding or manual copying of text is required.
 
-## Screenshots
+## Assets & Resources
 
+- 📥 [Download Workflow JSON File](PDF%20to%20Notes,%20Points%20or%20Slides%20(2).json)
 - 🔗 [View Test Session Screenshot](assets/git1.PNG)
 - 🔗 [View Workflow Architecture Screenshot](assets/Capture.JPG)
 - 🔗 [View Result Preview Screenshot](assets/git2.PNG)
@@ -169,11 +170,3 @@ The last node completes the form and displays the generated result to the user o
 - Very large documents may exceed the input limit of the selected model.
 - AI-generated summaries can contain mistakes or omit details. Important content should be checked against the original document.
 
-## Possible Improvements
-
-- Add a third output mode that generates a slide-by-slide outline
-- Support multiple PDF uploads in a single submission
-- Add OCR for scanned documents
-- Split very long documents into chunks and combine the partial summaries
-- Export the result as a downloadable Word or PDF file
-- Accept input through other channels, such as email or a chat platform
