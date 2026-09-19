@@ -24,17 +24,13 @@ Reading long PDF documents to extract the main ideas is time consuming. This wor
 ## Screenshots
 
 ### 1. Test Session
-
-![Test session](git1.PNG)
+![Test session](assets/git1.PNG)
 
 ### 2. Workflow
-
-![Workflow](capture.JPG)
-
+![Workflow](assets/Capture.JPG)
 
 ### 3. Result
-
-![Result](git2.PNG)
+![Result](assets/git2.PNG)
 
 ## Key Features
 
