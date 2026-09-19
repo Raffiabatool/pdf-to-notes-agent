@@ -5,7 +5,6 @@ An n8n workflow that converts an uploaded PDF document into either concise bulle
 ## Table of Contents
 
 - [Overview](#overview)
-- [Screenshots](#screenshots)
 - [Key Features](#key-features)
 - [Technology Stack](#technology-stack)
 - [Pipeline Architecture](#pipeline-architecture)
@@ -15,7 +14,6 @@ An n8n workflow that converts an uploaded PDF document into either concise bulle
 - [Installation and Setup](#installation-and-setup)
 - [Usage](#usage)
 - [Limitations](#limitations)
-- [Possible Improvements](#possible-improvements)
 
 ## Overview
 
@@ -23,7 +21,8 @@ Reading long PDF documents to extract the main ideas is time consuming. This wor
 
 ## Assets & Resources
 
-- 📥 [Download Workflow JSON File](assets/PDF%20to%20Notes,%20Points%20or%20Slides%20(2).json)- 🔗 [View Test Session Screenshot](assets/git1.PNG)
+- 📥 [Download Workflow JSON File](assets/PDF%20to%20Notes,%20Points%20or%20Slides%20(2).json)
+- 🔗 [View Test Session Screenshot](assets/git1.PNG)
 - 🔗 [View Workflow Architecture Screenshot](assets/Capture.JPG)
 - 🔗 [View Result Preview Screenshot](assets/git2.PNG)
 ## Key Features
